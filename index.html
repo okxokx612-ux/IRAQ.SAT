@@ -368,50 +368,75 @@ footer{
 </a>
 
 <script>
-// يملأ أرقام الدفع عبر JavaScript بدل كتابتها كنص خام بالـ HTML
-// هذا يصعّب على برامج الزحف الآلي (scraping bots) جمع الأرقام تلقائياً
+// أرقام الدفع
 document.querySelectorAll('.payment-number').forEach(function(el){
   el.textContent = el.getAttribute('data-num');
 });
 
-// تحميل مباريات اليوم
-// ملاحظة: هذا الكود يتوقع endpoint اسمه /.netlify/functions/matches
-// إذا الموقع غير مرفوع على Netlify، أو ما عندك دالة فعلية تتصل بمصدر بيانات حقيقي (مثل API-Football)،
-// هذا الجزء سيفشل بأمان ويعرض رسالة واضحة بدون ما يكسر باقي الصفحة.
+// مباريات اليوم عبر api-sports.io
 function showMatchesMessage(text, type){
-  const container = document.getElementById('matchesContainer');
-  container.innerHTML = '<div class="match ' + type + '">' + text + '</div>';
+  document.getElementById('matchesContainer').innerHTML =
+    '<div class="match ' + type + '">' + text + '</div>';
 }
 
-fetch("/.netlify/functions/matches")
-  .then(function(response){
-    if(!response.ok){
-      throw new Error('استجابة غير ناجحة من الخادم');
-    }
-    return response.json();
-  })
-  .then(function(data){
-    const container = document.getElementById('matchesContainer');
-    if(data && data.response && data.response.length){
-      let html = "";
-      data.response.forEach(function(match){
-        const home = match.teams.home.name;
-        const away = match.teams.away.name;
-        const time = new Date(match.fixture.date)
-          .toLocaleTimeString('ar-IQ',{hour:'2-digit', minute:'2-digit'});
-        html += '<div class="match">' +
-                  '<div class="teams">' + home + ' ⚽ ' + away + '</div>' +
-                  '<div class="time">🕒 ' + time + '</div>' +
-                '</div>';
-      });
-      container.innerHTML = html;
-    } else {
-      showMatchesMessage("لا توجد مباريات اليوم", "empty");
-    }
-  })
-  .catch(function(){
-    showMatchesMessage("تعذر تحميل المباريات حالياً، تواصل معنا للاستفسار عن جدول اليوم", "error");
-  });
+var today = new Date().toISOString().slice(0, 10);
+
+fetch("https://v3.football.api-sports.io/fixtures?date=" + today, {
+  method: "GET",
+  headers: {
+    "x-apisports-key": "8d0c34e067f891928ce1ed2423978169"
+  }
+})
+.then(function(res){
+  if(!res.ok) throw new Error('خطأ في الاتصال');
+  return res.json();
+})
+.then(function(data){
+  var container = document.getElementById('matchesContainer');
+  if(data && data.response && data.response.length > 0){
+    // نرتب المباريات حسب الوقت
+    var matches = data.response.sort(function(a, b){
+      return new Date(a.fixture.date) - new Date(b.fixture.date);
+    });
+
+    var html = "";
+    matches.forEach(function(match){
+      var home = match.teams.home.name;
+      var away = match.teams.away.name;
+      var league = match.league.name;
+      var country = match.league.country;
+      var status = match.fixture.status.short;
+      var time = new Date(match.fixture.date)
+        .toLocaleTimeString('ar-IQ', {hour:'2-digit', minute:'2-digit'});
+
+      var statusText = "";
+      if(status === "1H" || status === "2H" || status === "ET"){
+        var elapsed = match.fixture.status.elapsed;
+        statusText = '<span style="color:#e74c3c;font-weight:bold;">🔴 الدقيقة ' + elapsed + '</span>';
+      } else if(status === "HT"){
+        statusText = '<span style="color:#e67e22;font-weight:bold;">استراحة</span>';
+      } else if(status === "FT"){
+        var hg = match.goals.home;
+        var ag = match.goals.away;
+        statusText = '<span style="color:#aaa;">انتهت ' + hg + ' - ' + ag + '</span>';
+      } else {
+        statusText = '<span class="time">🕒 ' + time + '</span>';
+      }
+
+      html += '<div class="match">' +
+                '<div style="font-size:12px;color:#888;margin-bottom:6px;">' + league + ' · ' + country + '</div>' +
+                '<div class="teams">' + home + ' ⚽ ' + away + '</div>' +
+                '<div style="margin-top:8px;">' + statusText + '</div>' +
+              '</div>';
+    });
+    container.innerHTML = html;
+  } else {
+    showMatchesMessage("لا توجد مباريات مجدولة اليوم", "empty");
+  }
+})
+.catch(function(){
+  showMatchesMessage("تعذر تحميل المباريات، تواصل معنا للاستفسار عن جدول اليوم", "error");
+});
 </script>
 
 </body>
