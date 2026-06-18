@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>عالم الستلايت</title>
+<title>عالم الستلايت والإلكترونيات</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -17,25 +17,37 @@ font-family:'Cairo',sans-serif;
 }
 
 body{
-background:#f5f5f5;
+background:#f4f6f8;
 color:#222;
 }
 
-.hero{
-background:linear-gradient(135deg,#00695c,#00897b);
-color:white;
-text-align:center;
+header{
+background:linear-gradient(135deg,#00695c,#009688);
 padding:80px 20px;
+text-align:center;
+color:white;
 }
 
-.hero h1{
+header h1{
 font-size:50px;
-margin-bottom:15px;
 color:#FFD700;
+margin-bottom:15px;
 }
 
-.hero p{
+header p{
 font-size:22px;
+}
+
+.btn{
+display:inline-block;
+margin-top:25px;
+background:#25D366;
+color:white;
+padding:15px 35px;
+border-radius:12px;
+text-decoration:none;
+font-size:20px;
+font-weight:bold;
 }
 
 .container{
@@ -44,72 +56,77 @@ max-width:1200px;
 margin:auto;
 }
 
-.card{
+.section{
 background:white;
-padding:30px;
 margin:25px 0;
+padding:30px;
 border-radius:20px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
-.section-title{
-text-align:center;
+.section h2{
 color:#00695c;
-font-size:35px;
 margin-bottom:20px;
+font-size:32px;
+text-align:center;
 }
 
-.services{
+.device{
+text-align:center;
+}
+
+.device-price{
+font-size:40px;
+font-weight:bold;
+color:#FFD700;
+margin-top:15px;
+}
+
+.features{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
-.service{
-background:#f9f9f9;
+.feature{
+background:#f8f8f8;
 padding:20px;
 border-radius:15px;
 text-align:center;
 font-size:20px;
 }
 
-.prices table{
+table{
 width:100%;
 border-collapse:collapse;
-text-align:center;
 }
 
-.prices th{
+th{
 background:#00695c;
 color:white;
 padding:15px;
 }
 
-.prices td{
+td{
 padding:15px;
+text-align:center;
 border-bottom:1px solid #ddd;
 }
 
-.payments p{
-font-size:22px;
-margin:10px 0;
-}
-
-.contact{
-text-align:center;
-}
-
-.contact a{
-display:inline-block;
-background:#25D366;
-color:white;
-padding:15px 35px;
+.match{
+background:#f8f8f8;
+padding:15px;
 border-radius:12px;
-text-decoration:none;
-font-size:22px;
+margin-bottom:10px;
+font-size:20px;
 }
 
-.footer{
+.payment{
+font-size:22px;
+margin:15px 0;
+}
+
+footer{
 background:#00695c;
 color:white;
 text-align:center;
@@ -119,43 +136,94 @@ margin-top:30px;
 
 .whatsapp{
 position:fixed;
-bottom:20px;
 left:20px;
+bottom:20px;
 background:#25D366;
 color:white;
-padding:15px 20px;
+padding:15px 25px;
 border-radius:50px;
 text-decoration:none;
-font-size:18px;
+font-weight:bold;
 box-shadow:0 5px 15px rgba(0,0,0,.3);
 }
+
+.notice{
+background:#fff8e1;
+border-right:5px solid #FFD700;
+padding:15px;
+border-radius:10px;
+font-size:18px;
+}
+
 </style>
 </head>
 
 <body>
 
-<section class="hero">
-<h1>عالم الستلايت</h1>
-<p>الوكيل المعتمد لشبكة نجوم الرابعة في البصرة</p>
-</section>
+<header>
+
+<h1>عالم الستلايت والإلكترونيات</h1>
+
+<p>
+الوكيل المعتمد لشبكة نجوم الرابعة في البصرة
+</p>
+
+<a class="btn" href="https://wa.me/9647765078394">
+تواصل عبر واتساب
+</a>
+
+</header>
 
 <div class="container">
 
-<div class="card">
-<h2 class="section-title">خدماتنا</h2>
+<div class="section device">
 
-<div class="services">
-<div class="service">📺 تجديد الاشتراكات</div>
-<div class="service">🛰️ بيع الأجهزة</div>
-<div class="service">🛠️ الدعم الفني</div>
-<div class="service">🏆 متابعة البطولات العالمية</div>
-</div>
+<h2>عرض خاص</h2>
+
+<h3>جهاز شبكة نجوم الرابعة</h3>
+
+<p style="font-size:22px;margin-top:10px;">
+مع اشتراك 3 أشهر
+</p>
+
+<div class="device-price">
+85,000 د.ع
 </div>
 
-<div class="card prices">
-<h2 class="section-title">أسعار الاشتراكات</h2>
+</div>
+
+<div class="section">
+
+<h2>خدماتنا</h2>
+
+<div class="features">
+
+<div class="feature">
+📺 تجديد الاشتراكات
+</div>
+
+<div class="feature">
+🛰️ بيع الأجهزة
+</div>
+
+<div class="feature">
+⚽ متابعة البطولات العالمية
+</div>
+
+<div class="feature">
+🛠️ الدعم الفني
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>أسعار الاشتراكات</h2>
 
 <table>
+
 <tr>
 <th>المدة</th>
 <th>السعر</th>
@@ -175,33 +243,72 @@ box-shadow:0 5px 15px rgba(0,0,0,.3);
 <td>سنة كاملة</td>
 <td>180,000 د.ع</td>
 </tr>
+
 </table>
+
 </div>
 
-<div class="card payments">
-<h2 class="section-title">طرق الدفع</h2>
+<div class="section">
 
-<p>💳 ماستر الرافدين: 3282328354</p>
-<p>📱 زين كاش: 07765078394</p>
+<h2>مباريات اليوم</h2>
+
+<div class="notice">
+يمكنك تعديل المباريات يومياً بسهولة من ملف الموقع.
 </div>
 
-<div class="card contact">
-<h2 class="section-title">تواصل معنا</h2>
+<br>
 
-<p style="margin-bottom:20px;font-size:22px;">
-07765078394
+<div class="match">
+غانا × بنما — 02:00 صباحاً
+</div>
+
+<div class="match">
+أوزبكستان × كولومبيا — 05:00 صباحاً
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>طرق الدفع</h2>
+
+<div class="payment">
+💳 ماستر الرافدين : 3282328354
+</div>
+
+<div class="payment">
+📱 زين كاش : 07765078394
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>التواصل</h2>
+
+<p style="font-size:24px;text-align:center;">
+📞 07765078394
 </p>
 
-<a href="https://wa.me/9647765078394">
-تواصل عبر واتساب
+<br>
+
+<div style="text-align:center;">
+
+<a class="btn" href="https://wa.me/9647765078394">
+راسلنا الآن
 </a>
+
+</div>
+
 </div>
 
 </div>
 
-<div class="footer">
-© 2026 عالم الستلايت - جميع الحقوق محفوظة
-</div>
+<footer>
+
+© 2026 عالم الستلايت والإلكترونيات
+
+</footer>
 
 <a class="whatsapp" href="https://wa.me/9647765078394">
 واتساب
