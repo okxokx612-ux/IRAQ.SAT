@@ -257,6 +257,45 @@ footer{
   outline-offset:2px;
 }
 
+/* ===== Images ===== */
+.logo-img{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #d4af37;
+  margin:0 auto 18px;
+  display:block;
+}
+.section-img{
+  width:100%;
+  border-radius:12px;
+  display:block;
+  margin:14px 0 0;
+  border:1px solid #333;
+}
+.prices-layout{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.prices-layout .table-wrap{ flex:1; min-width:200px; }
+.prices-layout .price-img{ flex:1; min-width:200px; }
+.prices-layout .price-img img{
+  width:100%;
+  border-radius:12px;
+  border:1px solid #333;
+}
+.payment-img{
+  width:100%;
+  max-width:480px;
+  border-radius:12px;
+  display:block;
+  margin:16px auto 0;
+  border:1px solid #333;
+}
+
 /* ===== Responsive breakpoints ===== */
 @media (max-width:600px){
   .navbar{ gap:2px; }
@@ -288,6 +327,7 @@ footer{
 </nav>
 
 <header id="home">
+<img src="logo.png" alt="شعار عالم الستلايت - نجوم الرابعة" class="logo-img">
 <div class="phone-top">
 📞 <a href="tel:+9647765078394">07765078394</a>
 </div>
@@ -305,10 +345,12 @@ footer{
 <br><br>
 85,000 د.ع
 </div>
+<img src="offer.png" alt="عرض جهاز نجوم الرابعة مع اشتراك 3 أشهر" class="section-img">
 </div>
 
 <div class="section" id="prices">
 <h2>💰 أسعار الاشتراكات</h2>
+<div class="prices-layout">
 <div class="table-wrap">
 <table>
 <tr>
@@ -329,6 +371,10 @@ footer{
 </tr>
 </table>
 </div>
+<div class="price-img">
+<img src="price.png" alt="أسعار اشتراكات نجوم الرابعة مع كأس العالم 2026">
+</div>
+</div>
 </div>
 
 <div class="section" id="matches">
@@ -346,6 +392,7 @@ footer{
 <div class="payment">
 زين كاش : <span class="payment-number" data-num="07765078394"></span>
 </div>
+<img src="payment.png" alt="طرق الدفع - ماستر الرافدين وزين كاش" class="payment-img">
 </div>
 
 <div class="section" id="contact">
