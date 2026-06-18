@@ -14,40 +14,66 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Cairo',sans-serif;
+scroll-behavior:smooth;
 }
 
 body{
-background:#f4f6f8;
-color:#222;
+background:#0f0f0f;
+color:#fff;
 }
 
 .navbar{
-background:#004d40;
+background:#000;
 padding:15px;
 text-align:center;
 position:sticky;
 top:0;
 z-index:999;
+border-bottom:2px solid #d4af37;
 }
 
 .navbar a{
-color:white;
+color:#d4af37;
 text-decoration:none;
-margin:0 10px;
+margin:0 12px;
 font-weight:bold;
+font-size:17px;
 }
 
 header{
-background:linear-gradient(135deg,#00695c,#009688);
-padding:70px 20px;
+background:linear-gradient(135deg,#000,#1b1b1b);
 text-align:center;
-color:white;
+padding:70px 20px;
+border-bottom:3px solid #d4af37;
+}
+
+.phone-top{
+color:#d4af37;
+font-size:22px;
+font-weight:bold;
+margin-bottom:15px;
 }
 
 header h1{
-font-size:38px;
-color:#FFD700;
+font-size:42px;
+color:#d4af37;
 margin-bottom:10px;
+}
+
+header p{
+font-size:20px;
+color:#ddd;
+}
+
+.btn{
+display:inline-block;
+margin-top:20px;
+padding:12px 25px;
+background:#d4af37;
+color:#000;
+text-decoration:none;
+font-weight:bold;
+border-radius:10px;
 }
 
 .container{
@@ -57,24 +83,24 @@ margin:auto;
 }
 
 .section{
-background:white;
+background:#181818;
 padding:25px;
 margin:20px 0;
 border-radius:15px;
-box-shadow:0 3px 10px rgba(0,0,0,.1);
+border:1px solid #333;
 }
 
 .section h2{
 text-align:center;
 margin-bottom:20px;
-color:#00695c;
+color:#d4af37;
 }
 
 .offer{
 text-align:center;
 font-size:28px;
 font-weight:bold;
-color:#FFD700;
+color:#d4af37;
 }
 
 table{
@@ -83,41 +109,37 @@ border-collapse:collapse;
 }
 
 th{
-background:#00695c;
-color:white;
+background:#d4af37;
+color:#000;
 padding:12px;
 }
 
 td{
 padding:12px;
-border-bottom:1px solid #ddd;
+border-bottom:1px solid #333;
 text-align:center;
 }
 
 .match{
-background:#f8f8f8;
+background:#222;
 padding:15px;
 margin:10px 0;
 border-radius:10px;
-border-right:5px solid #FFD700;
+border-right:5px solid #d4af37;
 text-align:center;
 }
 
-.btn{
-display:inline-block;
-padding:12px 25px;
-background:#25D366;
-color:white;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
+.payment{
+font-size:20px;
+margin:10px 0;
+text-align:center;
 }
 
 footer{
-background:#00695c;
-color:white;
+background:#000;
+padding:20px;
 text-align:center;
-padding:15px;
+border-top:2px solid #d4af37;
 margin-top:20px;
 }
 
@@ -140,21 +162,23 @@ font-weight:bold;
 
 <nav class="navbar">
 <a href="#home">الرئيسية</a>
-<a href="#prices">الاشتراكات</a>
 <a href="#matches">المباريات</a>
+<a href="#prices">الاشتراكات</a>
 <a href="#payment">الدفع</a>
 <a href="#contact">التواصل</a>
 </nav>
 
 <header id="home">
 
+<div class="phone-top">
+📞 07765078394
+</div>
+
 <h1>عالم الستلايت والإلكترونيات</h1>
 
 <p>
 الوكيل المعتمد لشبكة نجوم الرابعة في البصرة
 </p>
-
-<br>
 
 <a class="btn" href="https://wa.me/9647765078394">
 تواصل عبر واتساب
@@ -216,17 +240,17 @@ font-weight:bold;
 
 </div>
 
-</div>
-
 <div class="section" id="payment">
 
 <h2>💳 طرق الدفع</h2>
 
-<p>ماستر الرافدين : 3282328354</p>
+<div class="payment">
+ماستر الرافدين : 3282328354
+</div>
 
-<br>
-
-<p>زين كاش : 07765078394</p>
+<div class="payment">
+زين كاش : 07765078394
+</div>
 
 </div>
 
@@ -260,8 +284,7 @@ font-weight:bold;
 واتساب
 </a>
 
-</body>
-  <script>
+<script>
 
 fetch("/.netlify/functions/matches")
 .then(response => response.json())
@@ -285,7 +308,9 @@ minute:'2-digit'
 html += `
 <div class="match">
 <strong>${home}</strong>
-<br>⚽<br>
+<br><br>
+⚽
+<br><br>
 <strong>${away}</strong>
 <br><br>
 🕒 ${time}
@@ -303,14 +328,14 @@ html = "<div class='match'>لا توجد مباريات اليوم</div>";
 document.getElementById("matchesContainer").innerHTML = html;
 
 })
-.catch(error => {
+.catch(() => {
 
 document.getElementById("matchesContainer").innerHTML =
 "<div class='match'>تعذر تحميل المباريات</div>";
 
-console.error(error);
-
 });
 
-  </script>
+</script>
+
+</body>
 </html>
