@@ -343,7 +343,7 @@ footer{
 <div class="offer">
 جهاز شبكة نجوم الرابعة
 <br><br>
-100,000 د.ع
+85,000 د.ع
 </div>
 <img src="offer.png" alt="عرض جهاز نجوم الرابعة مع اشتراك 3 أشهر" class="section-img">
 </div>
@@ -420,7 +420,7 @@ document.querySelectorAll('.payment-number').forEach(function(el){
   el.textContent = el.getAttribute('data-num');
 });
 
-// مباريات اليوم عبر api-sports.io
+// مباريات اليوم عبر AllSportsAPI
 function showMatchesMessage(text, type){
   document.getElementById('matchesContainer').innerHTML =
     '<div class="match ' + type + '">' + text + '</div>';
@@ -428,50 +428,39 @@ function showMatchesMessage(text, type){
 
 var today = new Date().toISOString().slice(0, 10);
 
-fetch("https://v3.football.api-sports.io/fixtures?date=" + today, {
-  method: "GET",
-  headers: {
-    "x-apisports-key": "8d0c34e067f891928ce1ed2423978169"
-  }
-})
+fetch("https://allsportsapi.com/api/football/?met=Fixtures&APIkey=3e93295be862ca28a1ede366710df85d61706e25bf7b010ac048a984b3662317&from=" + today + "&to=" + today)
 .then(function(res){
   if(!res.ok) throw new Error('خطأ في الاتصال');
   return res.json();
 })
 .then(function(data){
   var container = document.getElementById('matchesContainer');
-  if(data && data.response && data.response.length > 0){
-    // نرتب المباريات حسب الوقت
-    var matches = data.response.sort(function(a, b){
-      return new Date(a.fixture.date) - new Date(b.fixture.date);
+  if(data && data.result && data.result.length > 0){
+    var matches = data.result.sort(function(a, b){
+      return a.event_date.localeCompare(b.event_date);
     });
 
     var html = "";
     matches.forEach(function(match){
-      var home = match.teams.home.name;
-      var away = match.teams.away.name;
-      var league = match.league.name;
-      var country = match.league.country;
-      var status = match.fixture.status.short;
-      var time = new Date(match.fixture.date)
-        .toLocaleTimeString('ar-IQ', {hour:'2-digit', minute:'2-digit'});
+      var home = match.event_home_team;
+      var away = match.event_away_team;
+      var league = match.league_name;
+      var status = match.event_status;
+      var time = match.event_time || "";
 
       var statusText = "";
-      if(status === "1H" || status === "2H" || status === "ET"){
-        var elapsed = match.fixture.status.elapsed;
-        statusText = '<span style="color:#e74c3c;font-weight:bold;">🔴 الدقيقة ' + elapsed + '</span>';
-      } else if(status === "HT"){
-        statusText = '<span style="color:#e67e22;font-weight:bold;">استراحة</span>';
-      } else if(status === "FT"){
-        var hg = match.goals.home;
-        var ag = match.goals.away;
-        statusText = '<span style="color:#aaa;">انتهت ' + hg + ' - ' + ag + '</span>';
+      if(status === "Finished"){
+        statusText = '<span style="color:#aaa;">انتهت ' + match.event_final_result + '</span>';
+      } else if(status === "Half Time"){
+        statusText = '<span style="color:#e67e22;font-weight:bold;">استراحة ' + match.event_halftime_result + '</span>';
+      } else if(status && status.indexOf("'") !== -1){
+        statusText = '<span style="color:#e74c3c;font-weight:bold;">🔴 الدقيقة ' + status + '</span>';
       } else {
         statusText = '<span class="time">🕒 ' + time + '</span>';
       }
 
       html += '<div class="match">' +
-                '<div style="font-size:12px;color:#888;margin-bottom:6px;">' + league + ' · ' + country + '</div>' +
+                '<div style="font-size:12px;color:#888;margin-bottom:6px;">' + league + '</div>' +
                 '<div class="teams">' + home + ' ⚽ ' + away + '</div>' +
                 '<div style="margin-top:8px;">' + statusText + '</div>' +
               '</div>';
