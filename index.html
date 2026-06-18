@@ -380,7 +380,16 @@ footer{
 <div class="section" id="matches">
 <h2>🏆 مباريات اليوم</h2>
 <div id="matchesContainer" aria-live="polite">
-<div class="match loading">جاري تحميل المباريات...</div>
+<div class="match empty">لا توجد مباريات مضافة اليوم</div>
+</div>
+<!-- زر الإدارة السري - اضغط عليه 5 مرات لفتح لوحة التحكم -->
+<div id="adminTrigger" style="height:30px;cursor:default;" onclick="adminClick()"></div>
+<div id="adminPanel" style="display:none;margin-top:16px;background:#111;border:1px solid #d4af37;border-radius:12px;padding:18px;">
+  <h3 style="color:#d4af37;margin-bottom:12px;text-align:center;">🔧 إدارة المباريات</h3>
+  <div id="matchInputs"></div>
+  <button onclick="addMatchInput()" style="background:#333;color:#d4af37;border:1px solid #d4af37;padding:8px 16px;border-radius:8px;cursor:pointer;width:100%;margin-bottom:10px;font-family:Cairo,sans-serif;font-size:15px;">+ أضف مباراة</button>
+  <button onclick="saveMatches()" style="background:#d4af37;color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;width:100%;font-family:Cairo,sans-serif;font-size:16px;font-weight:bold;">💾 حفظ المباريات</button>
+  <button onclick="clearMatches()" style="background:#333;color:#e74c3c;border:1px solid #e74c3c;padding:8px 16px;border-radius:8px;cursor:pointer;width:100%;margin-top:8px;font-family:Cairo,sans-serif;font-size:14px;">🗑️ مسح كل المباريات</button>
 </div>
 </div>
 
@@ -420,59 +429,102 @@ document.querySelectorAll('.payment-number').forEach(function(el){
   el.textContent = el.getAttribute('data-num');
 });
 
-// مباريات اليوم عبر AllSportsAPI
-function showMatchesMessage(text, type){
-  document.getElementById('matchesContainer').innerHTML =
-    '<div class="match ' + type + '">' + text + '</div>';
+// نظام إدارة المباريات اليدوي
+var adminClickCount = 0;
+var adminTimer = null;
+
+function adminClick(){
+  adminClickCount++;
+  clearTimeout(adminTimer);
+  adminTimer = setTimeout(function(){ adminClickCount = 0; }, 2000);
+  if(adminClickCount >= 5){
+    adminClickCount = 0;
+    var panel = document.getElementById('adminPanel');
+    if(panel.style.display === 'none'){
+      panel.style.display = 'block';
+      loadInputs();
+    } else {
+      panel.style.display = 'none';
+    }
+  }
 }
 
-var today = new Date().toISOString().slice(0, 10);
+function getMatches(){
+  try{
+    return JSON.parse(localStorage.getItem('matches') || '[]');
+  } catch(e){ return []; }
+}
 
-fetch("https://allsportsapi.com/api/football/?met=Fixtures&APIkey=3e93295be862ca28a1ede366710df85d61706e25bf7b010ac048a984b3662317&from=" + today + "&to=" + today)
-.then(function(res){
-  if(!res.ok) throw new Error('خطأ في الاتصال');
-  return res.json();
-})
-.then(function(data){
+function renderMatches(){
+  var matches = getMatches();
   var container = document.getElementById('matchesContainer');
-  if(data && data.result && data.result.length > 0){
-    var matches = data.result.sort(function(a, b){
-      return a.event_date.localeCompare(b.event_date);
-    });
-
-    var html = "";
-    matches.forEach(function(match){
-      var home = match.event_home_team;
-      var away = match.event_away_team;
-      var league = match.league_name;
-      var status = match.event_status;
-      var time = match.event_time || "";
-
-      var statusText = "";
-      if(status === "Finished"){
-        statusText = '<span style="color:#aaa;">انتهت ' + match.event_final_result + '</span>';
-      } else if(status === "Half Time"){
-        statusText = '<span style="color:#e67e22;font-weight:bold;">استراحة ' + match.event_halftime_result + '</span>';
-      } else if(status && status.indexOf("'") !== -1){
-        statusText = '<span style="color:#e74c3c;font-weight:bold;">🔴 الدقيقة ' + status + '</span>';
-      } else {
-        statusText = '<span class="time">🕒 ' + time + '</span>';
-      }
-
-      html += '<div class="match">' +
-                '<div style="font-size:12px;color:#888;margin-bottom:6px;">' + league + '</div>' +
-                '<div class="teams">' + home + ' ⚽ ' + away + '</div>' +
-                '<div style="margin-top:8px;">' + statusText + '</div>' +
-              '</div>';
-    });
-    container.innerHTML = html;
-  } else {
-    showMatchesMessage("لا توجد مباريات مجدولة اليوم", "empty");
+  if(!matches.length){
+    container.innerHTML = '<div class="match empty">لا توجد مباريات مضافة اليوم</div>';
+    return;
   }
-})
-.catch(function(){
-  showMatchesMessage("تعذر تحميل المباريات، تواصل معنا للاستفسار عن جدول اليوم", "error");
-});
+  var html = '';
+  matches.forEach(function(m){
+    html += '<div class="match">' +
+              (m.league ? '<div style="font-size:12px;color:#888;margin-bottom:6px;">' + m.league + '</div>' : '') +
+              '<div class="teams">' + m.home + ' ⚽ ' + m.away + '</div>' +
+              '<div style="margin-top:8px;"><span class="time">🕒 ' + m.time + '</span></div>' +
+            '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function loadInputs(){
+  var matches = getMatches();
+  var div = document.getElementById('matchInputs');
+  div.innerHTML = '';
+  if(!matches.length) addMatchInput();
+  else matches.forEach(function(m){ addMatchInput(m); });
+}
+
+function addMatchInput(m){
+  m = m || {};
+  var div = document.getElementById('matchInputs');
+  var row = document.createElement('div');
+  row.style.cssText = 'background:#1a1a1a;border-radius:10px;padding:12px;margin-bottom:10px;';
+  row.innerHTML =
+    '<input placeholder="اسم الفريق الأول" value="'+(m.home||'')+'" style="'+inputStyle()+'" class="m-home"><br>' +
+    '<input placeholder="اسم الفريق الثاني" value="'+(m.away||'')+'" style="'+inputStyle()+'" class="m-away"><br>' +
+    '<input placeholder="الوقت (مثال: 21:00)" value="'+(m.time||'')+'" style="'+inputStyle()+'" class="m-time"><br>' +
+    '<input placeholder="الدوري (اختياري)" value="'+(m.league||'')+'" style="'+inputStyle()+'" class="m-league"><br>' +
+    '<button onclick="this.parentElement.remove()" style="background:transparent;color:#e74c3c;border:none;cursor:pointer;font-size:13px;font-family:Cairo,sans-serif;">✕ حذف هذه المباراة</button>';
+  div.appendChild(row);
+}
+
+function inputStyle(){
+  return 'width:100%;background:#222;color:#fff;border:1px solid #444;border-radius:8px;padding:8px 10px;margin-bottom:6px;font-family:Cairo,sans-serif;font-size:14px;direction:rtl;';
+}
+
+function saveMatches(){
+  var rows = document.getElementById('matchInputs').children;
+  var matches = [];
+  for(var i=0; i<rows.length; i++){
+    var home = rows[i].querySelector('.m-home').value.trim();
+    var away = rows[i].querySelector('.m-away').value.trim();
+    var time = rows[i].querySelector('.m-time').value.trim();
+    var league = rows[i].querySelector('.m-league').value.trim();
+    if(home && away) matches.push({home:home, away:away, time:time, league:league});
+  }
+  localStorage.setItem('matches', JSON.stringify(matches));
+  renderMatches();
+  document.getElementById('adminPanel').style.display = 'none';
+  alert('✅ تم حفظ المباريات بنجاح!');
+}
+
+function clearMatches(){
+  if(confirm('هل تريد مسح كل المباريات؟')){
+    localStorage.removeItem('matches');
+    renderMatches();
+    document.getElementById('adminPanel').style.display = 'none';
+  }
+}
+
+// تشغيل عند فتح الصفحة
+renderMatches();
 </script>
 
 </body>
