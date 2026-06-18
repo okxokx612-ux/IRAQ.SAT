@@ -21,6 +21,11 @@
 <meta name="twitter:title" content="عالم الستلايت والإلكترونيات">
 <meta name="twitter:description" content="الوكيل المعتمد لشبكة نجوم الرابعة في البصرة">
 
+<!-- ✅ Google AdSense: ضع هنا كود AdSense الخاص بك بعد الموافقة -->
+<!-- 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+-->
+
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230f0f0f'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle' fill='%23d4af37'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +84,6 @@
 .delay-3{ animation-delay:.4s; }
 .delay-4{ animation-delay:.55s; }
 
-/* صور تنبض عند التمرير فوقها */
 .section-img:hover,
 .price-img img:hover,
 .payment-img:hover{
@@ -87,7 +91,6 @@
   cursor:pointer;
 }
 
-/* شعار الهيدر */
 .logo-img{
   animation:zoomIn .8s ease forwards;
 }
@@ -352,6 +355,73 @@ footer{
   border:1px solid #333;
 }
 
+/* ===== AdSense Box ===== */
+.adsense-box{
+  background:#111;
+  border:1px dashed #d4af37;
+  border-radius:12px;
+  padding:16px;
+  text-align:center;
+  margin:18px 0;
+  color:#888;
+  font-size:13px;
+}
+
+/* ===== Affiliate Products ===== */
+.affiliate-section{
+  background:#181818;
+  padding:24px 18px;
+  margin:18px 0;
+  border-radius:15px;
+  border:1px solid #333;
+}
+.affiliate-section h2{
+  text-align:center;
+  margin-bottom:18px;
+  color:#d4af37;
+  font-size:clamp(19px, 4vw, 24px);
+}
+.affiliate-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+  gap:14px;
+}
+.affiliate-card{
+  background:#222;
+  border-radius:12px;
+  border:1px solid #333;
+  padding:14px 10px;
+  text-align:center;
+  transition:border-color .2s;
+}
+.affiliate-card:hover{
+  border-color:#d4af37;
+}
+.affiliate-card .icon{
+  font-size:36px;
+  margin-bottom:8px;
+}
+.affiliate-card p{
+  font-size:13px;
+  color:#ccc;
+  margin-bottom:10px;
+  line-height:1.4;
+}
+.affiliate-card a{
+  display:inline-block;
+  background:#d4af37;
+  color:#000;
+  font-weight:bold;
+  font-size:13px;
+  padding:7px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  transition:opacity .2s;
+}
+.affiliate-card a:hover{
+  opacity:0.85;
+}
+
 /* ===== Responsive breakpoints ===== */
 @media (max-width:600px){
   .navbar{ gap:2px; }
@@ -378,6 +448,7 @@ footer{
 <a href="#home">الرئيسية</a>
 <a href="#matches">المباريات</a>
 <a href="#prices">الاشتراكات</a>
+<a href="#affiliate">منتجات</a>
 <a href="#payment">الدفع</a>
 <a href="#contact">التواصل</a>
 </nav>
@@ -393,6 +464,21 @@ footer{
 </header>
 
 <div class="container">
+
+<!-- ✅ إعلان AdSense - أول إعلان (بعد الهيدر) -->
+<!-- بعد موافقة AdSense، احذف هذا الكومنت وضع كودك هنا -->
+<div class="adsense-box">
+  📢 مساحة إعلانية — سيظهر هنا إعلان Google AdSense بعد التفعيل
+  <!-- 
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+</div>
 
 <div class="section">
 <h2 class="animate-text">🔥 عرض خاص</h2>
@@ -433,12 +519,59 @@ footer{
 </div>
 </div>
 
+<!-- ✅ إعلان AdSense - ثاني إعلان (بين الأقسام) -->
+<div class="adsense-box">
+  📢 مساحة إعلانية — سيظهر هنا إعلان Google AdSense بعد التفعيل
+  <!--
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+</div>
+
+<!-- ✅ قسم منتجات العمولة من AliExpress -->
+<div class="affiliate-section" id="affiliate">
+  <h2>🛒 منتجات إلكترونية مختارة</h2>
+  <p style="text-align:center;color:#aaa;font-size:13px;margin-bottom:16px;">منتجات موصى بها — اشترِ بأفضل الأسعار</p>
+  <div class="affiliate-grid">
+
+    <div class="affiliate-card">
+      <div class="icon">📡</div>
+      <p>جهاز استقبال ستلايت H.265</p>
+      <a href="https://s.click.aliexpress.com/e/_satellite+receiver" target="_blank" rel="noopener sponsored">اشترِ الآن</a>
+    </div>
+
+    <div class="affiliate-card">
+      <div class="icon">📺</div>
+      <p>كابل HDMI عالي الجودة 4K</p>
+      <a href="https://www.aliexpress.com/wholesale?SearchText=hdmi+cable+4k" target="_blank" rel="noopener sponsored">اشترِ الآن</a>
+    </div>
+
+    <div class="affiliate-card">
+      <div class="icon">🔌</div>
+      <p>وصلة كهرباء متعددة مع حماية</p>
+      <a href="https://www.aliexpress.com/wholesale?SearchText=power+strip+surge+protector" target="_blank" rel="noopener sponsored">اشترِ الآن</a>
+    </div>
+
+    <div class="affiliate-card">
+      <div class="icon">📶</div>
+      <p>راوتر واي فاي سريع</p>
+      <a href="https://www.aliexpress.com/wholesale?SearchText=wifi+router" target="_blank" rel="noopener sponsored">اشترِ الآن</a>
+    </div>
+
+  </div>
+  <p style="text-align:center;color:#666;font-size:11px;margin-top:14px;">* نحصل على عمولة صغيرة عند الشراء عبر هذه الروابط دون أي تكلفة إضافية عليك</p>
+</div>
+
 <div class="section" id="matches">
 <h2 class="animate-text">🏆 مباريات اليوم</h2>
 <div id="matchesContainer" aria-live="polite">
 <div class="match empty">لا توجد مباريات مضافة اليوم</div>
 </div>
-<!-- زر الإدارة السري - اضغط عليه 5 مرات لفتح لوحة التحكم -->
 <div id="adminTrigger" style="height:30px;cursor:default;" onclick="adminClick()"></div>
 <div id="adminPanel" style="display:none;margin-top:16px;background:#111;border:1px solid #d4af37;border-radius:12px;padding:18px;">
   <h3 style="color:#d4af37;margin-bottom:12px;text-align:center;">🔧 إدارة المباريات</h3>
@@ -447,6 +580,20 @@ footer{
   <button onclick="saveMatches()" style="background:#d4af37;color:#000;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;width:100%;font-family:Tajawal,sans-serif;font-size:16px;font-weight:bold;">💾 حفظ المباريات</button>
   <button onclick="clearMatches()" style="background:#333;color:#e74c3c;border:1px solid #e74c3c;padding:8px 16px;border-radius:8px;cursor:pointer;width:100%;margin-top:8px;font-family:Tajawal,sans-serif;font-size:14px;">🗑️ مسح كل المباريات</button>
 </div>
+</div>
+
+<!-- ✅ إعلان AdSense - ثالث إعلان (قبل الدفع) -->
+<div class="adsense-box">
+  📢 مساحة إعلانية — سيظهر هنا إعلان Google AdSense بعد التفعيل
+  <!--
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
 </div>
 
 <div class="section" id="payment">
@@ -579,10 +726,8 @@ function clearMatches(){
   }
 }
 
-// تشغيل عند فتح الصفحة
 renderMatches();
 
-// تحريك العناصر عند التمرير
 var animated = new Set();
 function checkAnimations(){
   document.querySelectorAll('.animate-img, .animate-text, .animate-slide').forEach(function(el){
@@ -595,7 +740,6 @@ function checkAnimations(){
   });
 }
 
-// كل العناصر متوقفة في البداية إلا اللي بالهيدر
 document.querySelectorAll('.animate-img, .animate-text, .animate-slide').forEach(function(el){
   if(!el.closest('header')){
     el.style.animationPlayState = 'paused';
