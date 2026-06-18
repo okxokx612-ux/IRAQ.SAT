@@ -210,8 +210,10 @@ font-weight:bold;
 
 <h2>🏆 مباريات اليوم</h2>
 
-<div class="match">
-سيتم عرض المباريات هنا لاحقاً
+<div id="matchesContainer">
+جاري تحميل المباريات...
+</div>
+
 </div>
 
 </div>
@@ -259,4 +261,56 @@ font-weight:bold;
 </a>
 
 </body>
+  <script>
+
+fetch("/.netlify/functions/matches")
+.then(response => response.json())
+.then(data => {
+
+let html = "";
+
+if(data.response && data.response.length){
+
+data.response.forEach(match => {
+
+const home = match.teams.home.name;
+const away = match.teams.away.name;
+
+const time = new Date(match.fixture.date)
+.toLocaleTimeString('ar-IQ',{
+hour:'2-digit',
+minute:'2-digit'
+});
+
+html += `
+<div class="match">
+<strong>${home}</strong>
+<br>⚽<br>
+<strong>${away}</strong>
+<br><br>
+🕒 ${time}
+</div>
+`;
+
+});
+
+}else{
+
+html = "<div class='match'>لا توجد مباريات اليوم</div>";
+
+}
+
+document.getElementById("matchesContainer").innerHTML = html;
+
+})
+.catch(error => {
+
+document.getElementById("matchesContainer").innerHTML =
+"<div class='match'>تعذر تحميل المباريات</div>";
+
+console.error(error);
+
+});
+
+  </script>
 </html>
