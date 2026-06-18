@@ -211,23 +211,15 @@ font-weight:bold;
 
 <script>
 
-const API_KEY = "YOUR_API_KEY";
+fetch("/.netlify/functions/matches")
+.then(res => res.json())
+.then(data => {
 
-const today = new Date().toISOString().split('T')[0];
-
-fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`,{
-headers:{
-"x-apisports-key":API_KEY
-}
-})
-.then(res=>res.json())
-.then(data=>{
-
-let html='';
+let html = "";
 
 if(data.response && data.response.length){
 
-data.response.forEach(match=>{
+data.response.forEach(match => {
 
 html += `
 <div class="match">
@@ -235,7 +227,11 @@ ${match.teams.home.name}
 <br>⚽<br>
 ${match.teams.away.name}
 <br><br>
-🕒 ${new Date(match.fixture.date).toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'})}
+🕒 ${new Date(match.fixture.date)
+.toLocaleTimeString('ar-IQ',{
+hour:'2-digit',
+minute:'2-digit'
+})}
 </div>
 `;
 
@@ -243,21 +239,18 @@ ${match.teams.away.name}
 
 }else{
 
-html='<div class="match">لا توجد مباريات اليوم</div>';
+html = "<div class='match'>لا توجد مباريات اليوم</div>";
 
 }
 
-document.getElementById('matches').innerHTML=html;
+document.getElementById("matches").innerHTML = html;
 
 })
-.catch(()=>{
+.catch(() => {
 
-document.getElementById('matches').innerHTML=
-'<div class="match">تعذر تحميل المباريات</div>';
+document.getElementById("matches").innerHTML =
+"<div class='match'>تعذر تحميل المباريات</div>";
 
 });
 
 </script>
-
-</body>
-</html>
