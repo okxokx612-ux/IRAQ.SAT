@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -34,21 +33,6 @@ color:#FFD700;
 margin-bottom:10px;
 }
 
-header p{
-font-size:20px;
-}
-
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:12px 25px;
-background:#25D366;
-color:white;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-}
-
 .container{
 width:95%;
 max-width:1200px;
@@ -56,24 +40,33 @@ margin:auto;
 }
 
 .section{
-background:white;
-margin:20px 0;
+background:#fff;
 padding:25px;
+margin:20px 0;
 border-radius:15px;
 box-shadow:0 3px 10px rgba(0,0,0,.1);
 }
 
 .section h2{
 text-align:center;
-color:#00695c;
 margin-bottom:20px;
+color:#00695c;
 }
 
 .offer{
 text-align:center;
-font-size:24px;
+font-size:28px;
 font-weight:bold;
 color:#FFD700;
+}
+
+.match{
+background:#f8f8f8;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+border-right:5px solid #FFD700;
+text-align:center;
 }
 
 table{
@@ -89,22 +82,18 @@ padding:12px;
 
 td{
 padding:12px;
-text-align:center;
 border-bottom:1px solid #ddd;
+text-align:center;
 }
 
-.match{
-background:#f8f8f8;
-padding:15px;
-margin:10px 0;
-border-radius:12px;
-border-right:5px solid #FFD700;
-font-size:18px;
-}
-
-.payment{
-font-size:20px;
-margin:10px 0;
+.btn{
+display:inline-block;
+padding:12px 25px;
+background:#25D366;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
 }
 
 footer{
@@ -126,56 +115,33 @@ border-radius:50px;
 text-decoration:none;
 font-weight:bold;
 }
-
 </style>
+
 </head>
 <body>
 
 <header>
-
 <h1>عالم الستلايت والإلكترونيات</h1>
-
 <p>الوكيل المعتمد لشبكة نجوم الرابعة في البصرة</p>
-
-<a class="btn" href="https://wa.me/9647765078394">
-تواصل عبر واتساب
-</a>
-
+<br>
+<a class="btn" href="https://wa.me/9647765078394">تواصل عبر واتساب</a>
 </header>
 
 <div class="container">
 
 <div class="section">
-
 <h2>🔥 عرض خاص</h2>
-
 <div class="offer">
 جهاز شبكة نجوم الرابعة + اشتراك 3 أشهر
 <br><br>
 85,000 د.ع
 </div>
-
 </div>
 
 <div class="section">
-
-<h2>📺 خدماتنا</h2>
-
-<ul style="line-height:2;font-size:20px;">
-<li>تجديد اشتراكات نجوم الرابعة</li>
-<li>بيع أجهزة الاستقبال</li>
-<li>الدعم الفني</li>
-<li>متابعة البطولات العالمية</li>
-</ul>
-
-</div>
-
-<div class="section">
-
 <h2>💰 أسعار الاشتراكات</h2>
 
 <table>
-
 <tr>
 <th>المدة</th>
 <th>السعر</th>
@@ -195,28 +161,16 @@ font-weight:bold;
 <td>سنة كاملة</td>
 <td>180,000 د.ع</td>
 </tr>
-
 </table>
 
 </div>
 
 <div class="section">
 
-<h2>🏆 مباريات كأس العالم 2026</h2>
+<h2>🏆 مباريات اليوم</h2>
 
-<div class="match">
-غانا × بنما<br>
-🕒 02:00 صباحاً
-</div>
-
-<div class="match">
-أوزبكستان × كولومبيا<br>
-🕒 05:00 صباحاً
-</div>
-
-<div class="match">
-الأرجنتين × المكسيك<br>
-🕒 09:00 مساءً
+<div id="matches">
+جاري تحميل المباريات...
 </div>
 
 </div>
@@ -225,13 +179,9 @@ font-weight:bold;
 
 <h2>💳 طرق الدفع</h2>
 
-<div class="payment">
-ماستر الرافدين : 3282328354
-</div>
-
-<div class="payment">
-زين كاش : 07765078394
-</div>
+<p>ماستر الرافدين: 3282328354</p>
+<br>
+<p>زين كاش: 07765078394</p>
 
 </div>
 
@@ -240,15 +190,11 @@ font-weight:bold;
 <h2>📞 التواصل</h2>
 
 <center>
-
 <h3>07765078394</h3>
-
 <br>
-
 <a class="btn" href="https://wa.me/9647765078394">
 راسلنا الآن
 </a>
-
 </center>
 
 </div>
@@ -256,9 +202,62 @@ font-weight:bold;
 </div>
 
 <footer>
-
 © 2026 عالم الستلايت والإلكترونيات
-
 </footer>
 
-<a class="whatsapp" href="https://
+<a class="whatsapp" href="https://wa.me/9647765078394">
+واتساب
+</a>
+
+<script>
+
+const API_KEY = "YOUR_API_KEY";
+
+const today = new Date().toISOString().split('T')[0];
+
+fetch(`https://v3.football.api-sports.io/fixtures?date=${today}`,{
+headers:{
+"x-apisports-key":API_KEY
+}
+})
+.then(res=>res.json())
+.then(data=>{
+
+let html='';
+
+if(data.response && data.response.length){
+
+data.response.forEach(match=>{
+
+html += `
+<div class="match">
+${match.teams.home.name}
+<br>⚽<br>
+${match.teams.away.name}
+<br><br>
+🕒 ${new Date(match.fixture.date).toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'})}
+</div>
+`;
+
+});
+
+}else{
+
+html='<div class="match">لا توجد مباريات اليوم</div>';
+
+}
+
+document.getElementById('matches').innerHTML=html;
+
+})
+.catch(()=>{
+
+document.getElementById('matches').innerHTML=
+'<div class="match">تعذر تحميل المباريات</div>';
+
+});
+
+</script>
+
+</body>
+</html>
