@@ -1,7 +1,7 @@
 
 exports.handler = async function() {
 
-  const API_KEY = "ضع_مفتاح_API_هنا";
+  const API_KEY = "280fa7bf9dbcbd81d0a64c66e08a1b68";
 
   const today = new Date().toISOString().split("T")[0];
 
